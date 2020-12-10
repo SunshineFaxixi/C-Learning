@@ -5,4 +5,5 @@
 ##ignore this file##
 .vscode
 *.un~
+*.exe
 
