@@ -121,29 +121,63 @@ int Rmax(struct Node *p)
 
 struct Node *LSearch(struct Node *p)
 {
+    
+}
 
+void Insert(struct Node *p, int index, int x)
+{
+    struct Node *temp;
+    int i;
+
+    if(index < 0 || index > count(p))
+        return;
+
+    temp = (struct Node *) malloc(sizeof(struct Node));
+    temp->data = x;
+    
+    if(index == 0)
+    {
+        temp->next = first;
+        first = temp;
+    }
+    else
+    {
+        for (i = 0; i < index - 1; i++)
+            p = p->next;
+        temp->next = p->next;
+        p->next = temp;
+    }
 }
 
 int main()
 {
-    int A[] = {43, 5, 7, 40, 25, 20, 53};
-    create(A, 7);
-    printf("\nwhile loop:\n");
-    display(first);
-    printf("\nrecursion:\n");
-    RDisplay(first);
-    printf("\nreverse print:\n");
-    Reverse_RDisplay(first);
+    // int A[] = {43, 5, 7, 40, 25, 20, 53};
+    // create(A, 7);
+    // printf("\nwhile loop:\n");
+    // display(first);
+    // printf("\nrecursion:\n");
+    // RDisplay(first);
+    // printf("\nreverse print:\n");
+    // Reverse_RDisplay(first);
     
+    // printf("\n");
+    // printf("Length is %d\n", count(first));
+    // printf("RLength is %d\n", Rcount(first));
+
+    // printf("Sum is %d\n", sum(first));
+    // printf("RSum is %d\n", Rsum(first));
+
+    // printf("Max is %d\n", max(first));
+    // printf("RMax is %d\n", Rmax(first));
+
+    display(first);
     printf("\n");
-    printf("Length is %d\n", count(first));
-    printf("RLength is %d\n", Rcount(first));
 
-    printf("Sum is %d\n", sum(first));
-    printf("RSum is %d\n", Rsum(first));
-
-    printf("Max is %d\n", max(first));
-    printf("RMax is %d\n", Rmax(first));
+    Insert(first, 0, 8);
+    Insert(first, 1, 10);
+    Insert(first, 2, 21);
+    display(first);
+    printf("\n");
 
     return 0;
 }
