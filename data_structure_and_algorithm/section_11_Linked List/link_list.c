@@ -119,9 +119,60 @@ int Rmax(struct Node *p)
     return x > p->data ? x : p->data;
 }
 
-struct Node *LSearch(struct Node *p)
+struct Node *LSearch(struct Node *p, int key)
 {
+    struct Node *q = NULL;
 
+    while(p)
+    {
+        if(p->data == key)
+        {
+            q->next = p->next;
+            p->next = first;
+            first = p;
+            return p;
+        }    
+            
+        q = p;
+        p = p->next;
+    }
+    return NULL;
+}
+
+struct Node *RSearch(struct Node *p, int key)
+{
+    if(!p)
+        return NULL;
+    if(p->data == key)
+        return p;
+    return RSearch(p->next, key);
+}
+
+void Insert(struct Node *p, int pos, int x)
+{
+    struct Node *t;
+    int i;
+
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = x;
+
+    if(pos == 0)
+    {
+        t->next = first;
+        first = t;
+    }
+    else
+    {
+        for (i = 0; (i < pos - 1) && p; i++)
+        {
+            p = p->next;
+        }
+        if(p)
+        {
+            t->next = p->next;
+            p->next = t;
+        }
+    }
 }
 
 int main()
@@ -130,20 +181,33 @@ int main()
     create(A, 7);
     printf("\nwhile loop:\n");
     display(first);
-    printf("\nrecursion:\n");
-    RDisplay(first);
-    printf("\nreverse print:\n");
-    Reverse_RDisplay(first);
+    // printf("\nrecursion:\n");
+    // RDisplay(first);
+    // printf("\nreverse print:\n");
+    // Reverse_RDisplay(first);
     
+    // printf("\n");
+    // printf("Length is %d\n", count(first));
+    // printf("RLength is %d\n", Rcount(first));
+
+    // printf("Sum is %d\n", sum(first));
+    // printf("RSum is %d\n", Rsum(first));
+
+    // printf("Max is %d\n", max(first));
+    // printf("RMax is %d\n", Rmax(first));
+    // struct Node *temp;
+    // temp = LSearch(first, 20);
+    // temp = LSearch(first, 7);
+    // // temp = RSearch(first, 53);
+    // if(temp)
+    //     printf("\nfound key %d\n", temp->data);
+    // else
+    //     printf("\nnot found\n");
+
     printf("\n");
-    printf("Length is %d\n", count(first));
-    printf("RLength is %d\n", Rcount(first));
+    Insert(first, 7, 10);
 
-    printf("Sum is %d\n", sum(first));
-    printf("RSum is %d\n", Rsum(first));
-
-    printf("Max is %d\n", max(first));
-    printf("RMax is %d\n", Rmax(first));
+    display(first);
 
     return 0;
 }
