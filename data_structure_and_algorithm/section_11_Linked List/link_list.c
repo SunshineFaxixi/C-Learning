@@ -119,33 +119,59 @@ int Rmax(struct Node *p)
     return x > p->data ? x : p->data;
 }
 
-struct Node *LSearch(struct Node *p)
+struct Node *LSearch(struct Node *p, int key)
 {
-    
+    struct Node *q = NULL;
+
+    while(p)
+    {
+        if(p->data == key)
+        {
+            q->next = p->next;
+            p->next = first;
+            first = p;
+            return p;
+        }    
+            
+        q = p;
+        p = p->next;
+    }
+    return NULL;
 }
 
-void Insert(struct Node *p, int index, int x)
+struct Node *RSearch(struct Node *p, int key)
 {
-    struct Node *temp;
+    if(!p)
+        return NULL;
+    if(p->data == key)
+        return p;
+    return RSearch(p->next, key);
+}
+
+void Insert(struct Node *p, int pos, int x)
+{
+    struct Node *t;
     int i;
 
-    if(index < 0 || index > count(p))
-        return;
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = x;
 
-    temp = (struct Node *) malloc(sizeof(struct Node));
-    temp->data = x;
-    
-    if(index == 0)
+    if(pos == 0)
     {
-        temp->next = first;
-        first = temp;
+        t->next = first;
+        first = t;
     }
     else
     {
-        for (i = 0; i < index - 1; i++)
+        for (i = 0; (i < pos - 1) && p; i++)
+        {
             p = p->next;
-        temp->next = p->next;
-        p->next = temp;
+        }
+        if(p)
+        {
+            t->next = p->next;
+            p->next = t;
+        }
     }
 }
 
