@@ -175,6 +175,39 @@ void Insert(struct Node *p, int pos, int x)
     }
 }
 
+void InsertSorted(struct Node *p, int x)
+{
+    struct Node *t, *q;
+    int i;
+
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = x;
+    t->next = NULL;
+
+    if(first == NULL)
+    {
+        first = t;
+    }
+    else
+    {
+        while(p && (p->data < x))
+        {
+            q = p;
+            p = p->next;
+        }
+        if(p == first)
+        {
+            t->next = first;
+            first = t;
+        }
+        else
+        {
+            t->next = q->next;
+            q->next = t;
+        }
+    }
+}
+
 int main()
 {
     // int A[] = {43, 5, 7, 40, 25, 20, 53};
