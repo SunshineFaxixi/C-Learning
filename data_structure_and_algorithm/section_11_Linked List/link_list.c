@@ -177,8 +177,7 @@ void Insert(struct Node *p, int pos, int x)
 
 void InsertSorted(struct Node *p, int x)
 {
-    struct Node *t, *q;
-    int i;
+    struct Node *t, *q = NULL;
 
     t = (struct Node *)malloc(sizeof(struct Node));
     t->data = x;
@@ -208,11 +207,75 @@ void InsertSorted(struct Node *p, int x)
     }
 }
 
+int delete(struct Node *p, int index)
+{
+    struct Node *q = NULL;
+    int i;
+    int x = -1;
+
+    if(index < 1 || index > count(p))
+        return -1;
+    if(index == 1)
+    {
+        q = first;
+        x = first->data;
+        first = first->next;
+        free(q);
+        return x;
+    }
+    else
+    {
+        for (i = 0; p && (i < index - 1); i++)
+        {
+            q = p;
+            p = p->next;
+        }
+        q->next = p->next;
+        x = p->data;
+        free(p);
+    }
+    return x;
+}
+
+int isSorted(struct Node *p)
+{
+    int x = INT_MIN;
+    while(p)
+    {
+        if(p->data < x)
+            return 0;
+        x = p->data;
+        p = p->next;
+    }
+
+    return 1;
+}
+
+void removeDuplicated(struct Node *p)
+{
+    struct Node *q = p->next;
+    while(q)
+    {
+        if(p->data != q->data)
+        {
+            p = q;
+            q = q->next;
+        }
+        else
+        {
+            p->next = q->next;
+            free(q);
+            q = p->next;
+        }
+    }
+
+}
+
 int main()
 {
     // int A[] = {43, 5, 7, 40, 25, 20, 53};
     // create(A, 7);
-    // printf("\nwhile loop:\n");
+    // // printf("\nwhile loop:\n");
     // display(first);
     // printf("\nrecursion:\n");
     // RDisplay(first);
@@ -229,12 +292,34 @@ int main()
     // printf("Max is %d\n", max(first));
     // printf("RMax is %d\n", Rmax(first));
 
+    // display(first);
+    // printf("\n");
+
+    // Insert(first, 0, 8);
+    // Insert(first, 1, 10);
+    // Insert(first, 2, 21);
+    // display(first);
+    // printf("\n");
+    // printf("delete element is %d\n", delete (first, 10));
+    // display(first);
+
+    // int A[] = {43, 5, 7, 40, 25, 20, 53};
+    // int A[] = {5, 7, 20, 53};
+    // create(A, 4);
+    // display(first);
+    // printf("\n");
+    // if(isSorted(first))
+    //     printf("Sorted\n");
+    // else
+    //     printf("Not Sorted\n");
+
+    int A[] = {30, 30, 30};
+    create(A, 3);
     display(first);
     printf("\n");
 
-    Insert(first, 0, 8);
-    Insert(first, 1, 10);
-    Insert(first, 2, 21);
+    removeDuplicated(first);
+
     display(first);
     printf("\n");
 
