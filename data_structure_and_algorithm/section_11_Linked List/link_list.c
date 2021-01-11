@@ -5,9 +5,9 @@ struct Node
 {
     int data;
     struct Node *next;
-} *first = NULL;
+} *first = NULL, *second = NULL, *third = NULL;
 
-void create(int A[], int n)
+void Create(int A[], int n)
 {
     struct Node *last, *temp;
 
@@ -26,7 +26,26 @@ void create(int A[], int n)
     }
 }
 
-void display(struct Node *p)
+void Create2(int A[], int n)
+{
+    struct Node *last, *temp;
+
+    second = (struct Node *)malloc(sizeof(struct Node));
+    second->data = A[0];
+    second->next = NULL;
+    last = second;
+
+    for (int i = 1; i < n; i++)
+    {
+        temp = (struct Node *)malloc(sizeof(struct Node));
+        temp->data = A[i];
+        temp->next = NULL;
+        last->next = temp;
+        last = temp;
+    }
+}
+
+void Display(struct Node *p)
 {
     while(p != NULL)
     {
@@ -53,7 +72,7 @@ void Reverse_RDisplay(struct Node *p)
     }
 }
 
-int count(struct Node *p)
+int Count(struct Node *p)
 {
     int l = 0;
     while(p)
@@ -75,7 +94,7 @@ int Rcount(struct Node *p)
         return 0;
 }
 
-int sum(struct Node *p)
+int Sum(struct Node *p)
 {
     int s = 0;
 
@@ -96,7 +115,7 @@ int Rsum(struct Node *p)
         return Rsum(p->next) + p->data;
 }
 
-int max(struct Node *p)
+int Max(struct Node *p)
 {
     int m = INT_MIN;
     while(p)
@@ -207,13 +226,13 @@ void InsertSorted(struct Node *p, int x)
     }
 }
 
-int delete(struct Node *p, int index)
+int Delete(struct Node *p, int index)
 {
     struct Node *q = NULL;
     int i;
     int x = -1;
 
-    if(index < 1 || index > count(p))
+    if(index < 1 || index > Count(p))
         return -1;
     if(index == 1)
     {
@@ -237,7 +256,7 @@ int delete(struct Node *p, int index)
     return x;
 }
 
-int isSorted(struct Node *p)
+int IsSorted(struct Node *p)
 {
     int x = INT_MIN;
     while(p)
@@ -251,7 +270,7 @@ int isSorted(struct Node *p)
     return 1;
 }
 
-void removeDuplicated(struct Node *p)
+void RemoveDuplicated(struct Node *p)
 {
     struct Node *q = p->next;
     while(q)
@@ -271,28 +290,148 @@ void removeDuplicated(struct Node *p)
 
 }
 
+void Reverse1(struct Node *p)
+{
+    int *A;
+    int i = 0;
+    struct Node *q = p;
+
+    A = (int *) malloc(sizeof(int) * Count(p));
+
+    while(q)
+    {
+        A[i++] = q->data;
+        q = q->next;
+    }
+
+    q = p;
+    i--;
+    while(q)
+    {
+        q->data = A[i--];
+        q = q->next;
+    }
+}
+
+void Reverse2(struct Node *p)
+{
+    struct Node *q = NULL, *r = NULL;
+
+    while(p)
+    {
+        r = q;
+        q = p;
+        p = p->next;
+        q->next = r;
+    }
+    first = q;
+}
+
+void Reverse3(struct Node *q, struct Node *p)
+{
+    if(p != NULL)
+    {
+        Reverse3(p, p->next);
+        p->next = q;
+    }
+    else
+    {
+        first = q;
+    }
+}
+
+void Concat(struct Node *p, struct Node *q)
+{
+    third = p;
+
+    while(p->next)
+    {
+        p = p->next;
+    }
+    p->next = q;
+    q = NULL;
+}
+
+struct Node *Merge(struct Node *first, struct Node *second)
+{
+    struct Node *last;
+
+    if(first->data < second->data)
+    {
+        third = last = first;
+        first = first->next;
+        last->next = NULL;
+    }
+    else
+    {
+        third = last = second;
+        second = second->next;
+        last->next = NULL;
+    }
+
+    while(first && second)
+    {
+        if(first->data < second->data)
+        {
+            last->next = first;
+            last = first;
+            first = first->next;
+            last->next = NULL;
+        }
+        else
+        {
+            last->next = second;
+            last = second;
+            second = second->next;
+            last->next = NULL;
+        }
+    }
+
+    if(first)
+        last->next = first;
+    else
+        last->next = second;
+
+    return third;
+}
+
+int IsLoop(struct Node *f)
+{
+    struct Node *p, *q;
+    p = q = f;
+
+    do
+    {
+        p = p->next;
+        q = q->next;
+        q = (q != NULL) ? q->next : NULL;
+    } while (p && q && (p != q));
+
+    return (p == q) ? 1 : 0;
+}
+
 int main()
 {
     // int A[] = {43, 5, 7, 40, 25, 20, 53};
-    // create(A, 7);
+    // Create(A, 7);
     // // printf("\nwhile loop:\n");
-    // display(first);
+    // Display(first);
     // printf("\nrecursion:\n");
     // RDisplay(first);
     // printf("\nreverse print:\n");
     // Reverse_RDisplay(first);
     
     // printf("\n");
-    // printf("Length is %d\n", count(first));
+    // printf("Length is %d\n", Count(first));
     // printf("RLength is %d\n", Rcount(first));
 
-    // printf("Sum is %d\n", sum(first));
+    // printf("Sum is %d\n", Sum(first));
     // printf("RSum is %d\n", Rsum(first));
 
-    // printf("Max is %d\n", max(first));
+    // printf("Max is %d\n", Max(first));
     // printf("RMax is %d\n", Rmax(first));
 
-    // display(first);
+    // Display(first);
     // printf("\n");
 
     // Insert(first, 0, 8);
@@ -300,28 +439,56 @@ int main()
     // Insert(first, 2, 21);
     // display(first);
     // printf("\n");
-    // printf("delete element is %d\n", delete (first, 10));
-    // display(first);
+    // printf("delete element is %d\n", Delete (first, 10));
+    // Display(first);
 
     // int A[] = {43, 5, 7, 40, 25, 20, 53};
     // int A[] = {5, 7, 20, 53};
-    // create(A, 4);
+    // Create(A, 4);
+    // Display(first);
+    // printf("\n");
+    // if(IsSorted(first))
+    //     printf("Sorted\n");
+    // elseglgl
+    //     printf("Not Sorted\n");
+// ============ Concat =====================
+    int A1[] = {11, 13, 15, 17, 19, 25};
+    Create(A1, 6);
+    Display(first);
+    printf("\n");
+
+    int A2[] = {10, 12, 14, 16, 20, 24};
+    Create2(A2, 6);
+    Display(second);
+    printf("\n");
+
+    Concat(second, first);
+    Display(third);
+    printf("\n");
+// ============ Merge ======================
+    // int A1[] = {11, 13, 15, 17, 19, 25};
+    // Create(A1, 6);
+    // Display(first);
+    // printf("\n");
+
+    // int A2[] = {10, 12, 14, 16, 20, 24};
+    // Create2(A2, 6);
+    // Display(second);
+    // printf("\n");
+
+    // struct Node *p3 = Merge(first, second);
+    // Display(p3);
+    // printf("\n");
+
+    // ===============================================
+
+    // removeDuplicated(first);
+    // Reverse1(first);
+    // Reverse2(first);
+    // Reverse3(NULL,first);
+
     // display(first);
     // printf("\n");
-    // if(isSorted(first))
-    //     printf("Sorted\n");
-    // else
-    //     printf("Not Sorted\n");
-
-    int A[] = {30, 30, 30};
-    create(A, 3);
-    display(first);
-    printf("\n");
-
-    removeDuplicated(first);
-
-    display(first);
-    printf("\n");
 
     return 0;
 }
