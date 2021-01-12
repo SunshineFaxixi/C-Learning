@@ -452,19 +452,19 @@ int main()
     // elseglgl
     //     printf("Not Sorted\n");
 // ============ Concat =====================
-    int A1[] = {11, 13, 15, 17, 19, 25};
-    Create(A1, 6);
-    Display(first);
-    printf("\n");
+    // int A1[] = {11, 13, 15, 17, 19, 25};
+    // Create(A1, 6);
+    // Display(first);
+    // printf("\n");
 
-    int A2[] = {10, 12, 14, 16, 20, 24};
-    Create2(A2, 6);
-    Display(second);
-    printf("\n");
+    // int A2[] = {10, 12, 14, 16, 20, 24};
+    // Create2(A2, 6);
+    // Display(second);
+    // printf("\n");
 
-    Concat(second, first);
-    Display(third);
-    printf("\n");
+    // Concat(second, first);
+    // Display(third);
+    // printf("\n");
 // ============ Merge ======================
     // int A1[] = {11, 13, 15, 17, 19, 25};
     // Create(A1, 6);
@@ -489,6 +489,18 @@ int main()
 
     // display(first);
     // printf("\n");
+
+// ============ IsLoop ======================
+    struct Node *t1, *t2;
+
+    int A[] = {10, 20, 30, 40, 50};
+    Create(A, 5);
+
+    t1 = first->next->next;
+    t2 = first->next->next->next->next;
+    t2->next = t1;
+
+    printf("IsLoop: %d\n", IsLoop(first));
 
     return 0;
 }
