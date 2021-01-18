@@ -44,7 +44,7 @@ char Pop()
     return x;
 }
 
-int IsOperator(char x)
+int IsOperator(char x) 
 {
     if((x == '+') || (x == '-') || (x == '*') || (x == '/'))
         return 1;
