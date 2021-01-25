@@ -56,3 +56,51 @@ struct Node *DeQuene(struct Quene *q)
     }
     return x;
 }
+
+struct Stack
+{
+    int size;
+    int top;
+    struct Node **A;
+};
+
+void SCreate(struct Stack *st)
+{
+    printf("Enter the size of the stack: ");
+    scanf("%d",&st->size);
+    st->A = (struct Node **)malloc(st->size * sizeof(struct Node *));
+    st->top = -1;
+}
+
+void Push(struct Stack *st, struct Node *x)
+{
+    if(st->top == st->size - 1)
+    {
+        printf("StackOverflow\n");
+    }
+    else
+    {
+        st->top++;
+        st->A[st->top] = x;
+    }
+}
+
+struct Node *Pop(struct Stack *st)
+{
+    struct Node * x = NULL;
+
+    if(st->top < 0)
+    {
+        printf("Stack Underflow\n");
+    }
+    else
+    {
+        x = st->A[st->top--];
+    }
+    return x;
+}
+
+int SIsEmpty(struct Stack st)
+{
+    return (st.top == -1);
+}

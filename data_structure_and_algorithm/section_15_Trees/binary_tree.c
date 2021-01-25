@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include "quene.h"
+#include "quene_stack.h"
 
 struct Node *root = NULL;
 
@@ -76,15 +76,167 @@ void PostOrder(struct Node *root)
     }
 }
 
+void IPreOrder(struct Node *p)
+{
+    struct Stack st;
+    SCreate(&st);
+
+    while(p || (!SIsEmpty(st)))
+    {
+        if(p)
+        {
+            printf("%d ", p->data);
+            Push(&st, p);
+            p = p->lchild;
+        }
+        else
+        {
+            p = Pop(&st);
+            p = p->rchild;
+        }
+    }
+}
+
+void IInOrder(struct Node *p)
+{
+    struct Stack st;
+
+    while(p || (!SIsEmpty(st)))
+    {
+        if(p)
+        {
+            Push(&st, p);
+            p = p->lchild;
+        }
+        else
+        {
+            p = Pop(&st);
+            printf("%d ", p->data);
+            p = p->rchild;
+        }
+    }
+}
+
+// void IPostOrder(struct Node *p)
+// {
+//     struct Stack st;
+//     long long int temp;
+//     while(p || (!SIsEmpty(st)))
+//     {
+//         if(p)
+//         {
+//             Push(&st, p);
+//             p = p->lchild;
+//         }
+//         else
+//         {
+//             temp = Pop(&st);
+//             if(temp > 0)
+//             {
+//                 Push(&st, (-temp));
+//                 p = ((struct Node *)temp)->rchild;
+//             }
+//             else
+//             {
+//                 printf("%d ", ((struct Node *)(-1 * temp))->data);
+//                 p = NULL;
+//             }      
+//         }
+//     }
+// }
+
+void LevelOrder(struct Node *root)
+{
+    struct Quene q;
+    Create(&q, 100);
+    
+    printf("%d ", root->data);
+    EnQuene(&q, root);
+    while(!IsEmpty(&q))
+    {
+        root = DeQuene(&q);
+        if(root->lchild)
+        {
+            printf("%d ", root->lchild->data);
+            EnQuene(&q, root->lchild);
+        }
+        if(root->rchild)
+        {
+            printf("%d ", root->rchild->data);
+            EnQuene(&q, root->rchild);
+        }
+    }
+}
+
+int Count(struct Node *root)
+{
+    int x, y;
+    if(root)
+        return Count(root->lchild) + Count(root->rchild) + 1;
+    return 0;
+}
+
+int Count1(struct Node *root)
+{
+    int x, y;
+    if(root != NULL)
+    {
+        x = Count1(root->lchild);
+        y = Count1(root->rchild);
+        if(root->lchild && root->rchild)
+            return x + y + 1;
+        else
+        {
+            return x + y;
+        }
+    }
+    return 0;
+}
+
+int CountLeaf(struct Node *root)
+{
+    if(root == NULL)
+        return 0;
+    if(!root->lchild && !root->rchild)
+        return CountLeaf(root->lchild) + CountLeaf(root->rchild) + 1;
+    return CountLeaf(root->lchild) + CountLeaf(root->rchild);
+}
+
+int Height(struct Node *root)
+{
+    int x = 0, y = 0;
+    if(!root) 
+        return 0;
+    x = Height(root->lchild);
+    y = Height(root->rchild);
+    if(x > y)
+        return x + 1;
+    else
+        return y + 1;
+}
+
 int main()
 {
-    CreateTree();
-    printf("\nPreOrder:\n");
-    PreOrder(root);
-    printf("\nInOrder:\n");
-    InOrder(root);
-    printf("\nPostOrder:\n");
-    PostOrder(root);
+    CreateTree(100);
+    // printf("\nPreOrder:\n");
+    // PreOrder(root);
+    // printf("\nInOrder:\n");
+    // InOrder(root);
+    // printf("\nPostOrder:\n");
+    // PostOrder(root);
 
+    // printf("\n==========iter==========");
+    printf("\nPreOrder:\n");
+    IPreOrder(root);
+    printf("\nInOrder:\n");
+    IInOrder(root);
+    // printf("\nPostOrder:\n");
+    // IPostOrder(root);
+    printf("\nLevelOrder:\n");
+    LevelOrder(root);
+    printf("\ncount: %d\n", Count(root));
+    printf("node of degree 2 count: %d\n", Count1(root));
+    printf("Height: %d\n", Height(root));
+    printf("Count leaf: %d\n", CountLeaf(root));
     return 0;
 }
