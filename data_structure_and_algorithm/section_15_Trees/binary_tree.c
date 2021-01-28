@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include "quene_stack.h"
+#include "queue_stack.h"
 
 struct Node *root = NULL;
 

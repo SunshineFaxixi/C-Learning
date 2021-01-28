@@ -6,7 +6,7 @@ struct Node
     struct Node *lchild;
     int data;
     struct Node *rchild;
-};
+}*root;
 
 struct Quene
 {
@@ -103,4 +103,12 @@ struct Node *Pop(struct Stack *st)
 int SIsEmpty(struct Stack st)
 {
     return (st.top == -1);
+}
+
+int StackTop(struct Stack st)
+{
+    if(st.top != -1)
+        return st.A[st.top]->data;
+    else
+        return -1;    
 }
