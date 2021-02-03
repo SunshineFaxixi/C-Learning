@@ -214,10 +214,12 @@ int main()
     // printf("\n");
 
     // ===========CreatePre==============
-    int Pre[] = {30, 20, 10, 15, 25, 40, 50, 45};
-    CreatePre(Pre, sizeof(Pre) / sizeof(Pre[0]));
-    InOrder(root);
-    printf("\n");
+    // int Pre[] = {30, 20, 10, 15, 25, 40, 50, 45};
+    // CreatePre(Pre, sizeof(Pre) / sizeof(Pre[0]));
+    // InOrder(root);
+    // printf("\n");
+
+    
 
     return 0;
 }

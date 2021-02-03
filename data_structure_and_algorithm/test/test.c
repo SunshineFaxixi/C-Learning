@@ -61,15 +61,19 @@ int main()
     // printf("%d\n", 40000 * 40000);
     // printf("%f\n", 1e20 + ((-1e20) + 3.14));
 
-    int src[2048][2048] = {1};
-    int dst[2048][2048] = {0};
+    // int src[2048][2048] = {1};
+    // int dst[2048][2048] = {0};
 
-    clock_t start, end;
-    start = clock();
-    copyij(src, dst);
-    end = clock();
-    printf("%f\n", (float)(end-start)*1000/CLOCKS_PER_SEC);
-    // copyji();
+    // clock_t start, end;
+    // start = clock();
+    // copyij(src, dst);
+    // end = clock();
+    // printf("%f\n", (float)(end-start)*1000/CLOCKS_PER_SEC);
+    // // copyji();
+
+    char x = 25;
+    char y = x << 8;
+    printf("%c %c\n", x, x << 8);
 
     return 0;
 }
