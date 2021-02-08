@@ -9,22 +9,18 @@ void Swap(int *x, int *y)
     *y = temp;
 }
 
-void BubbleSort(int A[], int n)
+void SelectionSort(int A[], int n)
 {
-    int i, j, temp, flag;
+    int i, j, k;
 
     for(i = 0; i < n - 1; i++)
     {
-        flag = 0;
-        for(j = 0; j < n - 1 - i; j++)
+        for(j = k = i; j < n; j++)
         {
-            if(A[j] > A[j + 1])
-            {
-                Swap(&A[j], &A[j + 1]);
-                flag = 1;
-            }
+            if(A[k] > A[j])
+                k = j;
         }
-        if(flag == 0)  break;
+        Swap(&A[k], &A[i]);
     }
 }
 
@@ -34,8 +30,7 @@ int main()
     int n = sizeof(A) / sizeof(int);
     int i;
 
-    // BubbleSort(A, n);
-    Insertion(A, n);
+    SelectionSort(A, n);
 
     for(i = 0; i < n; i++)
     {
