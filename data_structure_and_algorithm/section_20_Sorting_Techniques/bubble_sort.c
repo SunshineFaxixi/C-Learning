@@ -34,8 +34,7 @@ int main()
     int n = sizeof(A) / sizeof(int);
     int i;
 
-    // BubbleSort(A, n);
-    Insertion(A, n);
+    BubbleSort(A, n);
 
     for(i = 0; i < n; i++)
     {
