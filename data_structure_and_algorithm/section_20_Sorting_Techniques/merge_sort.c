@@ -39,13 +39,27 @@ void IMergeSort(int A[], int n)
         Merge(A, 0, p/2 - 1, n - 1);
 }
 
+void RMergeSort(int A[], int l, int h)
+{
+    int mid;
+
+    if(l < h)
+    {
+        mid = (l + h) / 2;
+        RMergeSort(A, l, mid);
+        RMergeSort(A, mid + 1, h);
+        Merge(A, l, mid, h);
+    }
+}
+
 int main()
 {
     int A[] = {3, 7, 9, 10, 6, 5, 12, 4, 11, 2};
     int n = sizeof(A) / sizeof(int);
     int i;
 
-    IMergeSort(A, n);
+    // IMergeSort(A, n);
+    RMergeSort(A, 0, n - 1);
 
     for(i = 0; i < n; i++)
     {
